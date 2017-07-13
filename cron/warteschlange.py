@@ -1,38 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import socket
-import sys
-
-hostname = socket.gethostname()
-if hostname == 'Pumukel-GNU-Tablet':
-    sys.path[0:0] = [
-        '/usr/local/Plone/buildout-cache/eggs/python_redmine-1.0.2-py2.7.egg',
-        '/usr/local/Plone/buildout-cache/eggs/ipython-1.2.1-py2.7.egg',
-        '/usr/local/Plone/buildout-cache/eggs/ipdb-0.8-py2.7.egg',
-        '/usr/local/Plone/buildout-cache/eggs/requests-2.3.0-py2.7.egg',
-    ]
-
-elif hostname.startswith('Pumukel-MacBook'):
-    sys.path[0:0] = [
-        '/usr/local/Plone/buildout-cache/eggs/python_redmine-1.0.2-py2.7.egg',
-        '/usr/local/Plone/buildout-cache/eggs/ipython-1.2.1-py2.7.egg',
-        '/usr/local/Plone/buildout-cache/eggs/ipdb-0.8-py2.7.egg',
-        '/usr/local/Plone/buildout-cache/eggs/requests-2.5.1-py2.7.egg',
-    ]
-elif hostname == 'redmine1':
-    sys.path[0:0] = [
-        '/data/buildout-cache/eggs/python_redmine-1.0.2-py2.6.egg',
-        '/data/buildout-cache/eggs/ipython-1.2.1-py2.6.egg',
-        #'/data/buildout-cache/eggs/ipdb-0.8-py2.6.egg',
-        '/data/buildout-cache/eggs/requests-2.3.0-py2.6.egg',
-    ]
-
 # from ConfigParser import SafeConfigParser
 from redmine import Redmine
 
 import datetime
 import logging
+import sys
 
 
 log = logging.getLogger('Redmine-Warteschlange-Handler')
@@ -58,17 +32,11 @@ today = datetime.date.today()
 
 # Setup Redmine-Connector:
 redmine = Redmine(
-    #'https://www.scm.verwaltung.uni-muenchen.de/internetdienste/',
-    'https://localhost/internetdienste/',
-    #'http://localhost/internetdienste/',
-    #username='admin',
-    #password='admin',
+    'https://www.scm.verwaltung.uni-muenchen.de/webprojekte/',
     key='6824fa6b6ad10fa4828e003faf793a2260688486',
     requests={'verify': False})
 
 log.info("Connecting to Redmine Instance %s ", redmine.url)
-
-#tags = redmine.contact_tag.all()
 
 statuses = redmine.issue_status.all()
 
